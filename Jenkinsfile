@@ -3,7 +3,7 @@ pipeline {
        IMAGE_NAME = "website_img"
        IMAGE_TAG = "latest"
        STAGING = "abdelhafiz2-website-staging"
-       ENDPOINT = "http://10.0.22.6"
+       ENDPOINT = "http://34.227.192.71"
        PRODUCTION = "abdelhafiz2-website-prod"
      }
      agent none
@@ -33,13 +33,24 @@ pipeline {
             steps {
                script {
                  sh '''
-                    docker run --name $IMAGE_NAME -d -p 80:80 abdelhafiz2/$IMAGE_NAME:$IMAGE_TAG
+                    docker run --name $IMAGE_NAME -d -p 83:80 -e PORT=80 abdelhafiz2/$IMAGE_NAME:$IMAGE_TAG
                     sleep 5
                  '''
                }
             }
        }
-    
+     stage('Run Tests'){
+            agent any
+            steps{
+                script {
+                    sh '''
+                    curl $ENDPOINT:83 | grep "Dimension"
+                    
+                    '''
+                }
+            }
+        }
+       
      
       stage('Push image in staging and deploy it') {
        when {
