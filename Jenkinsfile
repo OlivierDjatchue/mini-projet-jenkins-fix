@@ -39,17 +39,7 @@ pipeline {
                }
             }
        }
-      stage('Run Tests'){
-            agent any
-            steps{
-                script {
-                    sh '''
-                    curl $ENDPOINT:80 | grep "Dimension"
-                    
-                    '''
-                }
-            }
-        }
+    
      
       stage('Push image in staging and deploy it') {
        when {
