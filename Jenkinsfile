@@ -26,6 +26,7 @@ pipeline {
                }
             }
        }
+
      
       stage('Clean Container') {
           agent any
@@ -49,13 +50,7 @@ pipeline {
       steps {
           script {
             sh '''
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
-nvm install node
-sudo chown -R $(whoami) ~/.npm
-sudo chown -R $(whoami) /usr/local/lib/node_modules
-
-
-             npm install -g heroku
+              npm install -g heroku
               heroku container:login
               heroku create $STAGING || echo "project already exist"
               heroku container:push -a $STAGING web
@@ -75,12 +70,7 @@ sudo chown -R $(whoami) /usr/local/lib/node_modules
       steps {
           script {
             sh '''
-              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
-nvm install node
-sudo chown -R $(whoami) ~/.npm
-sudo chown -R $(whoami) /usr/local/lib/node_modules
-
-             npm install -g heroku
+              npm install -g heroku
               heroku container:login
               heroku create $PRODUCTION || echo "project already exist"
               heroku container:push -a $PRODUCTION web
