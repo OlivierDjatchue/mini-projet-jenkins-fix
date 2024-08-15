@@ -16,6 +16,18 @@ pipeline {
                 }
              }
         }
+
+      stage('Clean Up Existing Containers'){
+            agent any
+            steps{
+                script {
+                    sh '''
+                    docker rm -f $INAGE_NAME || echo "Container does not exist"
+                    
+                    '''
+                }
+            }
+        }
         stage('Run container based on builded image') {
             agent any
             steps {
@@ -39,17 +51,6 @@ pipeline {
             }
         }
      
-      stage('Clean Container') {
-          agent any
-          steps {
-             script {
-               sh '''
-                 docker stop $IMAGE_NAME
-                 docker rm $IMAGE_NAME
-               '''
-             }
-          }
-     }
       stage('Push image in staging and deploy it') {
        when {
               expression { GIT_BRANCH == 'origin/master' }
