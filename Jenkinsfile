@@ -2,7 +2,8 @@ pipeline {
      environment {
        IMAGE_NAME = "website_img"
        IMAGE_TAG = "latest"
-       STAGING = "abdelhafiz2-website-staging" 
+       STAGING = "abdelhafiz2-website-staging"
+       ENDPOINT = "http://10-0-22-6"
        PRODUCTION = "abdelhafiz2-website-prod"
      }
      agent none
@@ -26,7 +27,17 @@ pipeline {
                }
             }
        }
-
+      stage('Run Tests'){
+            agent any
+            steps{
+                script {
+                    sh '''
+                    curl $ENDPOINT:80 | grep "Dimension"
+                    
+                    '''
+                }
+            }
+        }
      
       stage('Clean Container') {
           agent any
