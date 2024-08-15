@@ -3,7 +3,7 @@ pipeline {
        IMAGE_NAME = "website_img"
        IMAGE_TAG = "latest"
        STAGING = "abdelhafiz2-website-staging"
-       ENDPOINT = "http://10-0-22-6"
+       ENDPOINT = "http://10.0.22.6"
        PRODUCTION = "abdelhafiz2-website-prod"
      }
      agent none
