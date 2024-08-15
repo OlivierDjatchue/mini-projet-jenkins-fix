@@ -22,7 +22,7 @@ pipeline {
             steps{
                 script {
                     sh '''
-                    docker rm -f $INAGE_NAME || echo "Container does not exist"
+                    docker rm -f $IMAGE_NAME || echo "Container does not exist"
                     
                     '''
                 }
